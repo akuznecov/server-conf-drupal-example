@@ -1,0 +1,16 @@
+/var/log/nginx/*.log
+/var/log/nginx/*/*.log
+/var/log/nginx/*/*/*.log
+{
+        daily
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        create 640 {{webserver_user}} {{project_user}}
+        sharedscripts
+        postrotate
+                [ -f /var/run/nginx.pid ] && kill -USR1 `cat /var/run/nginx.pid`
+        endscript
+}
